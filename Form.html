@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>Feedback</title>
+  <style>
+    label {	float: left;
+			width: 150px;}
+      #container{
+          width: 700px;
+          margin: auto;
+          background-color: beige;
+      } 
+      main{
+          padding: 50px;
+      }
+  </style>
+ </head>
+ <body>
+ <div id="container">
+	 
+	 <main>
+	 <h2>Feeback</h2>
+	 <h3>Love something? Hate something? Let us know!</h3>
+		 Note : Fields marked with an asterisk(*) are mandatory
+		 <br><br>
+		 <form id="myForm" method="post" validate>
+			<label>Title*:</label>
+			<input type="radio" name="title" id="miss" value="miss" required="required"/>Miss
+			<input type="radio" name="title" id="mr" value="mr" required="required"/>Mr.
+			<input type="radio" name="title" id="mrs" value="mrs" required="required"/>Mrs.
+			<br><br>
+			<label for="firstName">First Name*:</label>
+			<input type="text" name="firstName" id="firstName" placeholder="First Name" required="required"/>	
+			<br><br>
+			<div id="error_firstName" style="display: none; color:red;">
+                
+                <br><br>
+            </div>
+
+			<label for="lastName">Last Name*:</label>
+			<input type="text" name="lastName" id="lastName" placeholder="Last Name" required="required"/>
+			<br><br>
+
+			<div id="error_lastName" style="display: none; color:red;">
+                Invalid last name, Please enter valid name.
+                <br><br>
+            </div>		
+			
+
+			<label for="emailId">Email Id*:</label>
+			<input type="text" name="emailId" id="emailId" placeholder="yourname@domain.com" required="required"/>
+			<br><br>
+			
+			<div id="error_emailId" style="display: none; color:red;">
+                Invalid email address, Please enter valid email in user@domain.com
+                <br><br>
+            </div>
+			
+			<label for="phoneNumber">Phone Number*:</label>
+			<input type="text" name="phoneNumber" id="phoneNumber" placeholder="xxx-xxx-xxxx" required="required"/>
+			<br><br>
+			
+			<div id="error_phoneNumber" style="display:none; color:red;">
+                Invalid phone number, enter valid phone number in xxx-xxx-xxxx format.
+                <br><br>
+            </div>
+
+            <label for="zipcode">ZipCode*:</label>
+			<input type="text" name="zipcode" id="zipcode" placeholder="xxxxxx" required="required"/>
+			<br><br>
+			<div id="error_zipcode" style="display:none; color:red;">
+                Invalid zipcode, enter valid zipcode of 5 digits.
+                <br><br>
+            </div>
+
+			<label for="selectbox">Choose a car:</label>
+			<select name="selectbox" id="selectbox">
+				<option value="volvo">Volvo</option>
+				<option value="saab">Saab</option>
+				<option value="mercedes">Mercedes</option>
+				<option value="audi">Audi</option>
+			</select>
+
+			<hr>
+
+			<div id="checkboxContainer"></div>
+			<div id="textContainer"></div>
+
+			<br><br>
+             
+            <label for="zipcode">How did you hear*:</label>
+			<input type='checkbox' name="source" value="facebook" /> Facebook
+            <input type='checkbox' name="source" value="google" /> Google
+            <input type='checkbox' name="source" value="yelp" /> Yelp 
+			<br><br> 
+
+             
+			<label for="comments">Comments*:</label>
+			<textarea name="text" id="comments" placeholder="Your comments" rows="5" cols="25"></textarea>
+			<br><br>
+			<input type="Submit" id="button" disabled>
+			<input type="Reset">
+			<br><br>
+		 </form>
+	 </main>
+ </div>
+
+ <script src="./index.js"></script>
+
+ </body>
+</html>
