@@ -12,9 +12,11 @@ var validLastName = false;
 var validEmail = false;
 var validPhone = false;
 var validZipcode = false;
+var validCheckboxes = false;
+var titleSelected = false;
 
 var regExName = /^[a-zA-Z]+$/;
-var regExEmail = /([\w\.]+)@([\w\.]+)\.(\w+)/;
+var regExEmail = /([\w\.]+)@(\bnortheastern\b)\.\bedu\b$/;
 var regExPhone = /\d{3}-?\d{3}-\d{4}$/;
 var regExZipcode = /^\d{5}$/;
 
@@ -33,6 +35,9 @@ phoneNumber.addEventListener("input", validate);
 
 var zipcode = document.getElementById("zipcode");
 zipcode.addEventListener("input", validate);
+
+var button = document.getElementById("button");
+button.addEventListener("click", submit);
 
 
 //write a function to validate my inputs
@@ -118,7 +123,11 @@ function validate(e) {
             }
             break;
     }
-    if (validPhone && validFirstName && validLastName && validEmail && validZipcode) {
+    validateSubmitButton();
+}
+
+function validateSubmitButton() {
+    if (validPhone && validFirstName && validLastName && validEmail && validZipcode && validCheckboxes && titleSelected) {
         document.getElementById("button").disabled = false;
     }
     else {
@@ -132,7 +141,50 @@ function submitted(e) {
         alert("Data entered Succesful");
     }
     else {
-        alert("Please enter valid details");
+        alert("Please enter valid and all details");
+    }
+}
+
+function submit(e) {
+    e.preventDefault();
+
+    if (validFirstName && validLastName && validEmail && validPhone && validZipcode && validCheckboxes) {
+        var formData = new FormData(form);
+
+        var tableBody = document.querySelector("#formDataTable tbody");
+        var tableHeaders = document.querySelector("#tableHeaders");
+
+        // Clear previous table data and headers
+        tableBody.innerHTML = "";
+        tableHeaders.innerHTML = "";
+
+        formData.forEach(function (value, key) {
+            var row = document.createElement("tr");
+
+            // Check if it's the first row, i.e., header row
+            if (tableHeaders.children.length === 0) {
+                var th = document.createElement("th");
+                th.textContent = key;
+                tableHeaders.appendChild(th);
+            }
+
+            var labelCell = document.createElement("td");
+            labelCell.textContent = key;
+
+            var valueCell = document.createElement("td");
+            valueCell.textContent = value;
+
+            row.appendChild(labelCell);
+            row.appendChild(valueCell);
+
+            tableBody.appendChild(row);
+        });
+
+        document.getElementById("myForm").reset();
+
+        alert("Data entered successfully. Form data has been added to the table.");
+    } else {
+        alert("Please enter valid and all details");
     }
 }
 
@@ -144,7 +196,7 @@ function handleSelectChange() {
     var checkboxContainer = document.getElementById("checkboxContainer");
 
     var textContainer = document.getElementById("textContainer");
-    
+
     // Clear any existing text field
     while (textContainer.firstChild) {
         textContainer.removeChild(textContainer.firstChild);
@@ -177,46 +229,85 @@ function handleSelectChange() {
     }
 }
 
+function mandatoryCheckboxes() {
+    validCheckboxes = false;
+    var checkboxesList = document.getElementsByName('source');
+    console.log(checkboxesList);
+    for (var i = 0; i < checkboxesList.length; i++) {
+        console.log(checkboxesList[i]);
+        if (checkboxesList[i].checked) {
+            validCheckboxes = true;
+            break;
+        }
+    }
+
+    validateSubmitButton();
+}
+
+function mandatoryRadioButton() {
+    var titleRadios = document.getElementsByName("title");
+    titleSelected = false;
+
+    console.log('titelndfjsndofjno')
+
+    for (var i = 0; i < titleRadios.length; i++) {
+        if (titleRadios[i].checked) {
+            titleSelected = true;
+            break;
+        }
+    }
+    validateSubmitButton();
+}
+
 function createCheckbox(id, label) {
     var checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.id = id;
     checkbox.name = "carOptions";
 
-    checkbox.onclick = function() {
-        if(checkbox.checked) createTextField();
-        else {
-            var textContainer = document.getElementById("textContainer");
-            textContainer.removeChild(textContainer.firstChild);
-            textContainer.removeChild(textContainer.firstChild);
+    checkbox.onclick = function () {
+        if (checkbox.checked) {
+            var checkboxesList = document.getElementsByName('carOptions');
+            for (var i = 0; i < checkboxesList.length; i++) {
+                checkboxesList[i].checked = false;
+            console.log(checkboxesList[i]);
+            checkbox.checked = true;
+            createTextField();
+            }
         }
-    };
+        else {
+                var textContainer = document.getElementById("textContainer");
+                textContainer.removeChild(textContainer.firstChild);
+                textContainer.removeChild(textContainer.firstChild);
+            }
+        };
 
-    var checkboxLabel = document.createElement("label");
-    checkboxLabel.setAttribute("for", id);
-    checkboxLabel.appendChild(document.createTextNode(label));
+        var checkboxLabel = document.createElement("label");
+        checkboxLabel.setAttribute("for", id);
+        checkboxLabel.appendChild(document.createTextNode(label));
 
-    var br = document.createElement("br");
+        var br = document.createElement("br");
 
-    var checkboxContainer = document.getElementById("checkboxContainer");
-    checkboxContainer.appendChild(checkbox);
-    checkboxContainer.appendChild(checkboxLabel);
-    checkboxContainer.appendChild(br);
-}
+        var checkboxContainer = document.getElementById("checkboxContainer");
+        checkboxContainer.appendChild(checkbox);
+        checkboxContainer.appendChild(checkboxLabel);
+        checkboxContainer.appendChild(br);
+    }
 
-function createTextField() {
-    var textField = document.createElement("input");
-    textField.type = "text";
-    textField.id = "textField";
-    textField.name = "textField";
-    textField.placeholder = "Enter text";
-    textField.required = true;
-    textField.classList.add("textfield");
+    function createTextField() {
+        var textField = document.createElement("input");
+        textField.type = "text";
+        textField.id = "textField";
+        textField.name = "textField";
+        textField.placeholder = "Enter text*";
+        textField.required = true;
+        textField.classList.add("textfield");
 
-    var br = document.createElement("br");
+        var br = document.createElement("br");
 
-    var textContainer = document.getElementById("textContainer");
-    textContainer.appendChild(textField);
-    textContainer.appendChild(br);
-}
+        var textContainer = document.getElementById("textContainer");
+        textContainer.innerHTML = "";
+        textContainer.appendChild(textField);
+        textContainer.appendChild(br);
+    }
 

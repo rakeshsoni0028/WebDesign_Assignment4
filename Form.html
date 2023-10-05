@@ -25,9 +25,9 @@
 		 <br><br>
 		 <form id="myForm" method="post" validate>
 			<label>Title*:</label>
-			<input type="radio" name="title" id="miss" value="miss" required="required"/>Miss
-			<input type="radio" name="title" id="mr" value="mr" required="required"/>Mr.
-			<input type="radio" name="title" id="mrs" value="mrs" required="required"/>Mrs.
+			<input type="radio" onclick="mandatoryRadioButton()" name="title" id="miss" value="miss" required="required"/>Miss
+			<input type="radio" onclick="mandatoryRadioButton()" name="title" id="mr" value="mr" required="required"/>Mr.
+			<input type="radio" onclick="mandatoryRadioButton()" name="title" id="mrs" value="mrs" required="required"/>Mrs.
 			<br><br>
 			<label for="firstName">First Name*:</label>
 			<input type="text" name="firstName" id="firstName" placeholder="First Name" required="required"/>	
@@ -48,11 +48,11 @@
 			
 
 			<label for="emailId">Email Id*:</label>
-			<input type="text" name="emailId" id="emailId" placeholder="yourname@domain.com" required="required"/>
+			<input type="text" name="emailId" id="emailId" placeholder="user@northeastern.edu" required="required"/>
 			<br><br>
 			
 			<div id="error_emailId" style="display: none; color:red;">
-                Invalid email address, Please enter valid email in user@domain.com
+                Invalid email address, Please enter valid email in user@northeastern.edu
                 <br><br>
             </div>
 			
@@ -89,20 +89,27 @@
 
 			<br><br>
              
-            <label for="zipcode">How did you hear*:</label>
-			<input type='checkbox' name="source" value="facebook" /> Facebook
-            <input type='checkbox' name="source" value="google" /> Google
-            <input type='checkbox' name="source" value="yelp" /> Yelp 
+            <label for="source">How did you hear*:</label>
+			<input type='checkbox' onclick="mandatoryCheckboxes()" name="source" value="facebook"/> Facebook
+            <input type='checkbox' onclick="mandatoryCheckboxes()" name="source" value="google"/> Google
+            <input type='checkbox' onclick="mandatoryCheckboxes()" name="source" value="yelp"/> Yelp 
 			<br><br> 
 
              
 			<label for="comments">Comments*:</label>
-			<textarea name="text" id="comments" placeholder="Your comments" rows="5" cols="25"></textarea>
+			<textarea name="text" id="comments" placeholder="Your comments" rows="5" cols="25" required></textarea>
 			<br><br>
 			<input type="Submit" id="button" disabled>
 			<input type="Reset">
 			<br><br>
 		 </form>
+
+		 <table id="formDataTable" border="1">
+			<thead>
+				<tr id="tableHeaders"></tr>
+			</thead>
+			<tbody></tbody>
+		</table>
 	 </main>
  </div>
 
