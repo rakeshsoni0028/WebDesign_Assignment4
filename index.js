@@ -156,7 +156,6 @@ function handleSelectChange() {
     }
 
     if (selectedOption === "volvo") {
-        createTextField();
         createCheckbox("volvoCheckbox", "Red");
         createCheckbox("volvoCheckbox", "Blue");
         createCheckbox("volvoCheckbox", "Green");
@@ -172,6 +171,9 @@ function handleSelectChange() {
         createCheckbox("audiCheckbox", "Orange");
         createCheckbox("audiCheckbox", "Blue");
         createCheckbox("audiCheckbox", "Purple");
+    } else if (selectedOption === "bmw") {
+        createCheckbox("audiCheckbox", "Orange");
+        createCheckbox("audiCheckbox", "Blue");
     }
 }
 
@@ -180,6 +182,15 @@ function createCheckbox(id, label) {
     checkbox.type = "checkbox";
     checkbox.id = id;
     checkbox.name = "carOptions";
+
+    checkbox.onclick = function() {
+        if(checkbox.checked) createTextField();
+        else {
+            var textContainer = document.getElementById("textContainer");
+            textContainer.removeChild(textContainer.firstChild);
+            textContainer.removeChild(textContainer.firstChild);
+        }
+    };
 
     var checkboxLabel = document.createElement("label");
     checkboxLabel.setAttribute("for", id);
